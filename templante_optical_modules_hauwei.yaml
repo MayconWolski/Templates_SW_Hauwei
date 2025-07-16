@@ -1,0 +1,1032 @@
+zabbix_export:
+  version: '7.2'
+  template_groups:
+    - uuid: 31a2c7b235b1462495f4bad087ee8943
+      name: 'Templates Huawei'
+  templates:
+    - uuid: 2ea75ccee6084112ad03bc94db4c33d9
+      template: 'Template Optical Modules'
+      name: 'Template Optical Modules'
+      groups:
+        - name: 'Templates Huawei'
+      discovery_rules:
+        - uuid: 44e08099b26d448d9201692c6f0bd31d
+          name: 'Network Optical Modules Info 40GB e 100GB'
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#IFNAME},1.3.6.1.2.1.47.1.1.1.1.7,{#IFALIAS},1.3.6.1.2.1.31.1.1.1.18,{#IFPRESENT},.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.14,{#IFCLASS},.1.3.6.1.2.1.47.1.1.1.1.5]'
+          key: net.if.optical.discovery
+          delay: 1h
+          filter:
+            evaltype: AND
+            conditions:
+              - macro: '{#IFCLASS}'
+                value: '10'
+              - macro: '{#IFNAME}'
+                value: '^(?i)(40ge|100ge)'
+          lifetime: 30d
+          enabled_lifetime_type: DISABLE_NEVER
+          description: 'Discovering interfaces from IF-MIB. Interfaces with down(2) Administrative Status are not discovered.'
+          item_prototypes:
+            - uuid: 8d4916e3f8df4f4fb47847b617f5cf1d
+              name: '{#IFNAME}:   Rx Power LANE 1'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.32.{#SNMPINDEX}'
+              key: 'hwEntityOpticalLane1RxPower[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              value_type: FLOAT
+              trends: 90d
+              units: dBm
+              preprocessing:
+                - type: REGEX
+                  parameters:
+                    - '^(-?\d+(\.\d+)?),'
+                    - \1
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Optical Module {#IFNAME}'
+            - uuid: b235ea5a6d584269a85c37621bbc5957
+              name: '{#IFNAME}:  Tx Power LANE 1'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.33.{#SNMPINDEX}'
+              key: 'hwEntityOpticalLane1TxPower[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              value_type: FLOAT
+              trends: 90d
+              units: dBm
+              preprocessing:
+                - type: REGEX
+                  parameters:
+                    - '^(-?\d+(\.\d+)?),'
+                    - \1
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Optical Module {#IFNAME}'
+            - uuid: ce973144d5ba42c289300e76f9a08838
+              name: '{#IFNAME}:   Rx Power LANE 2'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.32.{#SNMPINDEX}'
+              key: 'hwEntityOpticalLane2RxPower[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              value_type: FLOAT
+              trends: 90d
+              units: dBm
+              preprocessing:
+                - type: REGEX
+                  parameters:
+                    - '^-?\d+(\.\d+)?,(-?\d+(\.\d+)?)'
+                    - \2
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Optical Module {#IFNAME}'
+            - uuid: 91cc82af063c4b9f86519a509188fec6
+              name: '{#IFNAME}:   Tx Power LANE 2'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.33.{#SNMPINDEX}'
+              key: 'hwEntityOpticalLane2TxPower[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              value_type: FLOAT
+              trends: 90d
+              units: dBm
+              preprocessing:
+                - type: REGEX
+                  parameters:
+                    - '^-?\d+(\.\d+)?,(-?\d+(\.\d+)?)'
+                    - \2
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Optical Module {#IFNAME}'
+            - uuid: c69a6d2e3d744358b254667eb7e76ae9
+              name: '{#IFNAME}:    Rx Power LANE 3'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.32.{#SNMPINDEX}'
+              key: 'hwEntityOpticalLane3RxPower[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              value_type: FLOAT
+              trends: 90d
+              units: dBm
+              preprocessing:
+                - type: REGEX
+                  parameters:
+                    - '^-?\d+(\.\d+)?,-?\d+(\.\d+)?,(-?\d+(\.\d+)?)'
+                    - \3
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Optical Module {#IFNAME}'
+            - uuid: cc42b14ad1cd4b238947f377f82430fa
+              name: '{#IFNAME}:     Tx Power LANE 3'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.33.{#SNMPINDEX}'
+              key: 'hwEntityOpticalLane3TxPower[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              value_type: FLOAT
+              trends: 90d
+              units: dBm
+              preprocessing:
+                - type: REGEX
+                  parameters:
+                    - '^-?\d+(\.\d+)?,-?\d+(\.\d+)?,(-?\d+(\.\d+)?)'
+                    - \3
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Optical Module {#IFNAME}'
+            - uuid: 45fa6f7a488548cf83d8b09df218b141
+              name: '{#IFNAME}:  Rx Power LANE 4'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.32.{#SNMPINDEX}'
+              key: 'hwEntityOpticalLane4RxPower[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              value_type: FLOAT
+              trends: 90d
+              units: dBm
+              preprocessing:
+                - type: REGEX
+                  parameters:
+                    - '^-?\d+(\.\d+)?,-?\d+(\.\d+)?,-?\d+(\.\d+)?,(-?\d+(\.\d+)?)'
+                    - \4
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Optical Module {#IFNAME}'
+            - uuid: 54c8140466514bb2bde09878d4dd562b
+              name: '{#IFNAME}:   Tx Power LANE 4'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.33.{#SNMPINDEX}'
+              key: 'hwEntityOpticalLane4TxPower[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              value_type: FLOAT
+              trends: 90d
+              units: dBm
+              preprocessing:
+                - type: REGEX
+                  parameters:
+                    - '^-?\d+(\.\d+)?,-?\d+(\.\d+)?,-?\d+(\.\d+)?,(-?\d+(\.\d+)?)'
+                    - \4
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Optical Module {#IFNAME}'
+            - uuid: d12d5794475d417486c55d0292e75ae4
+              name: '{#IFNAME}: Rx High Threshold'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.14.{#SNMPINDEX}'
+              key: 'hwEntityOpticalRxHighThreshold[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              value_type: FLOAT
+              trends: 90d
+              units: dBm
+              preprocessing:
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Optical Module {#IFNAME}'
+            - uuid: 188a84649da54c699ec4978a8d11532c
+              name: '{#IFNAME}: Rx High Warning'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.21.{#SNMPINDEX}'
+              key: 'hwEntityOpticalRxHighWarnThreshold[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              value_type: FLOAT
+              trends: 90d
+              units: dBm
+              preprocessing:
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Optical Module {#IFNAME}'
+            - uuid: 1f31aa15b3dc42df9cb678f993841c26
+              name: '{#IFNAME}: Rx Low Threshold'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.13.{#SNMPINDEX}'
+              key: 'hwEntityOpticalRxLowThreshold[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              value_type: FLOAT
+              trends: 90d
+              units: dBm
+              preprocessing:
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Optical Module {#IFNAME}'
+            - uuid: 558449c2078c4c9ba530e0b29e3858c2
+              name: '{#IFNAME}: Rx Low Warning'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.20.{#SNMPINDEX}'
+              key: 'hwEntityOpticalRxLowWarnThreshold[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              value_type: FLOAT
+              trends: 90d
+              units: dBm
+              preprocessing:
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Optical Module {#IFNAME}'
+            - uuid: a948d502dada4a51aee5cd8a544affef
+              name: '{#IFNAME}:  Temperatura'
+              type: SNMP_AGENT
+              snmp_oid: '1.3.6.1.4.1.2011.5.25.31.1.1.3.1.5.{#SNMPINDEX}'
+              key: 'hwEntityOpticalTemperature[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              trends: 90d
+              units: C
+              tags:
+                - tag: Application
+                  value: 'Optical Module {#IFNAME}'
+              trigger_prototypes:
+                - uuid: 8a1db4be05424c278671ed9817cd0321
+                  expression: 'last(/Template Optical Modules/hwEntityOpticalTemperature[{#SNMPINDEX}])>{$OPT_MOD_TEMP_WARN} and last(/Template Optical Modules/hwEntityOpticalTemperature[{#SNMPINDEX}])<{$OPT_MOD_TEMP_CRIT}'
+                  name: 'Interface {#IFNAME}: Temperatura do Modulo Otico   > 85C'
+                  priority: WARNING
+                  description: 'Temperatura Atual: {ITEM.LASTVALUE1}.'
+                  tags:
+                    - tag: SENSOR
+                      value: TEMPERATURA
+                - uuid: a7c7a896f53c47a6adb4709c0c1f943f
+                  expression: 'last(/Template Optical Modules/hwEntityOpticalTemperature[{#SNMPINDEX}])>={$OPT_MOD_TEMP_CRIT}'
+                  name: 'Interface {#IFNAME}: Temperatura do Modulo Otico    > 90C'
+                  priority: DISASTER
+                  description: 'Temperatura Atual: {ITEM.LASTVALUE1}.'
+                  tags:
+                    - tag: SENSOR
+                      value: TEMPERATURA
+            - uuid: 8afbdc0fd2014cccb6e6327ee22b4e9b
+              name: '{#IFNAME}:   Tx High Threshold'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.16.{#SNMPINDEX}'
+              key: 'hwEntityOpticalTxHighThreshold[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              value_type: FLOAT
+              trends: 90d
+              units: dBm
+              preprocessing:
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Optical Module {#IFNAME}'
+            - uuid: fc5f897023c74092ae1dfec0afc54a19
+              name: '{#IFNAME}:   Tx High Warning'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.23.{#SNMPINDEX}'
+              key: 'hwEntityOpticalTxHighWarnThreshold[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              value_type: FLOAT
+              trends: 90d
+              units: dBm
+              preprocessing:
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Optical Module {#IFNAME}'
+            - uuid: 3b00eecbb4d2456bb2783e1ad1d3d3f9
+              name: '{#IFNAME}:  Tx Low Threshold'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.15.{#SNMPINDEX}'
+              key: 'hwEntityOpticalTxLowThreshold[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              value_type: FLOAT
+              trends: 90d
+              units: dBm
+              preprocessing:
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Optical Module {#IFNAME}'
+            - uuid: c17bd59f086241cbb210879f15c28c71
+              name: '{#IFNAME}:   Tx Low Warning'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.22.{#SNMPINDEX}'
+              key: 'hwEntityOpticalTxLowWarnThreshold[{#SNMPINDEX}]'
+              delay: 5m
+              history: 30d
+              value_type: FLOAT
+              trends: 90d
+              units: dBm
+              preprocessing:
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Optical Module {#IFNAME}'
+          trigger_prototypes:
+            - uuid: 6763576cc7c7449183933301679f21a2
+              expression: |
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane1RxPower[{#SNMPINDEX}]) > last(/Template Optical Modules/hwEntityOpticalRxHighWarnThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalLane1RxPower[{#SNMPINDEX}]) <= last(/Template Optical Modules/hwEntityOpticalRxHighThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalRxHighWarnThreshold[{#SNMPINDEX}]) <> -0.01)
+                ) or
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane2RxPower[{#SNMPINDEX}]) > last(/Template Optical Modules/hwEntityOpticalRxHighWarnThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalLane2RxPower[{#SNMPINDEX}]) <= last(/Template Optical Modules/hwEntityOpticalRxHighThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalRxHighWarnThreshold[{#SNMPINDEX}]) <> -0.01)
+                ) or
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane3RxPower[{#SNMPINDEX}]) > last(/Template Optical Modules/hwEntityOpticalRxHighWarnThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalLane3RxPower[{#SNMPINDEX}]) <= last(/Template Optical Modules/hwEntityOpticalRxHighThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalRxHighWarnThreshold[{#SNMPINDEX}]) <> -0.01)
+                ) or
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane4RxPower[{#SNMPINDEX}]) > last(/Template Optical Modules/hwEntityOpticalRxHighWarnThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalLane4RxPower[{#SNMPINDEX}]) <= last(/Template Optical Modules/hwEntityOpticalRxHighThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalRxHighWarnThreshold[{#SNMPINDEX}]) <> -0.01)
+                )
+              name: 'Interface {#IFNAME}: Rx Power Alto (Aviso) em uma das lanes'
+              priority: WARNING
+              description: |
+                Alerta de potência óptica Alta no host: {HOST.NAME}
+                
+                Interface: {#IFNAME}
+                
+                Rx Power LANE 1: {ITEM.LASTVALUE1} dBm  
+                Rx Power LANE 2: {ITEM.LASTVALUE2} dBm  
+                Rx Power LANE 3: {ITEM.LASTVALUE3} dBm  
+                Rx Power LANE 4: {ITEM.LASTVALUE4} dBm  
+                
+                Limite de aviso: {ITEM.LASTVALUE5} dBm
+                
+                
+                Verifique a qualidade do sinal para evitar perda de conectividade.
+              tags:
+                - tag: 'SINAL RX'
+                  value: '100GB e 40GB'
+            - uuid: da2f2673a1744364b46df80d3754afdc
+              expression: |
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane1RxPower[{#SNMPINDEX}]) > last(/Template Optical Modules/hwEntityOpticalRxHighThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalRxHighThreshold[{#SNMPINDEX}]) <> -0.01)
+                ) or
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane2RxPower[{#SNMPINDEX}]) > last(/Template Optical Modules/hwEntityOpticalRxHighThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalRxHighThreshold[{#SNMPINDEX}]) <> -0.01)
+                ) or
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane3RxPower[{#SNMPINDEX}]) > last(/Template Optical Modules/hwEntityOpticalRxHighThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalRxHighThreshold[{#SNMPINDEX}]) <> -0.01)
+                ) or
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane4RxPower[{#SNMPINDEX}]) > last(/Template Optical Modules/hwEntityOpticalRxHighThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalRxHighThreshold[{#SNMPINDEX}]) <> -0.01)
+                )
+              name: 'Interface {#IFNAME}: Rx Power Alto (Crítico) em uma das lanes'
+              priority: DISASTER
+              description: |
+                Alerta de potência óptica Alta no host: {HOST.NAME}
+                
+                Interface: {#IFNAME}
+                
+                Rx Power LANE 1: {ITEM.LASTVALUE1} dBm  
+                Rx Power LANE 2: {ITEM.LASTVALUE2} dBm  
+                Rx Power LANE 3: {ITEM.LASTVALUE3} dBm  
+                Rx Power LANE 4: {ITEM.LASTVALUE4} dBm  
+                
+                Limite de aviso: {ITEM.LASTVALUE5} dBm
+                
+                
+                Verifique a qualidade do sinal para evitar perda de conectividade.
+              tags:
+                - tag: 'SINAL RX'
+                  value: '100GB e 40GB'
+            - uuid: 3dcb96915d30478aa8e50735a7ad0538
+              expression: |
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane1RxPower[{#SNMPINDEX}]) < last(/Template Optical Modules/hwEntityOpticalRxLowWarnThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalLane1RxPower[{#SNMPINDEX}]) >= last(/Template Optical Modules/hwEntityOpticalRxLowThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalRxLowWarnThreshold[{#SNMPINDEX}]) <> -0.01 and
+                   last(/Template Optical Modules/hwEntityOpticalLane1RxPower[{#SNMPINDEX}]) > -40)
+                ) or
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane2RxPower[{#SNMPINDEX}]) < last(/Template Optical Modules/hwEntityOpticalRxLowWarnThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalLane2RxPower[{#SNMPINDEX}]) >= last(/Template Optical Modules/hwEntityOpticalRxLowThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalRxLowWarnThreshold[{#SNMPINDEX}]) <> -0.01 and
+                   last(/Template Optical Modules/hwEntityOpticalLane2RxPower[{#SNMPINDEX}]) > -40)
+                ) or
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane3RxPower[{#SNMPINDEX}]) < last(/Template Optical Modules/hwEntityOpticalRxLowWarnThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalLane3RxPower[{#SNMPINDEX}]) >= last(/Template Optical Modules/hwEntityOpticalRxLowThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalRxLowWarnThreshold[{#SNMPINDEX}]) <> -0.01 and
+                   last(/Template Optical Modules/hwEntityOpticalLane3RxPower[{#SNMPINDEX}]) > -40)
+                ) or
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane4RxPower[{#SNMPINDEX}]) < last(/Template Optical Modules/hwEntityOpticalRxLowWarnThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalLane4RxPower[{#SNMPINDEX}]) >= last(/Template Optical Modules/hwEntityOpticalRxLowThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalRxLowWarnThreshold[{#SNMPINDEX}]) <> -0.01 and
+                   last(/Template Optical Modules/hwEntityOpticalLane4RxPower[{#SNMPINDEX}]) > -40)
+                )
+              name: 'Interface {#IFNAME}: Rx Power Baixo (Aviso) em uma das lanes'
+              priority: WARNING
+              description: |
+                Alerta de potência óptica baixa no host: {HOST.NAME}
+                
+                Interface: {#IFNAME}
+                
+                Rx Power LANE 1: {ITEM.LASTVALUE1} dBm  
+                Rx Power LANE 2: {ITEM.LASTVALUE2} dBm  
+                Rx Power LANE 3: {ITEM.LASTVALUE3} dBm  
+                Rx Power LANE 4: {ITEM.LASTVALUE4} dBm  
+                
+                Limite de aviso: {ITEM.LASTVALUE5} dBm
+                
+                
+                Verifique a qualidade do sinal para evitar perda de conectividade.
+              tags:
+                - tag: 'SINAL RX'
+                  value: '100GB e 40GB'
+            - uuid: 0105a6b592ea4938bfbeb4cb0479f156
+              expression: |
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane1RxPower[{#SNMPINDEX}]) < last(/Template Optical Modules/hwEntityOpticalRxLowThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalRxLowThreshold[{#SNMPINDEX}]) <> -0.01 and
+                   last(/Template Optical Modules/hwEntityOpticalLane1RxPower[{#SNMPINDEX}]) > -40)
+                ) or
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane2RxPower[{#SNMPINDEX}]) < last(/Template Optical Modules/hwEntityOpticalRxLowThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalRxLowThreshold[{#SNMPINDEX}]) <> -0.01 and
+                   last(/Template Optical Modules/hwEntityOpticalLane2RxPower[{#SNMPINDEX}]) > -40)
+                ) or
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane3RxPower[{#SNMPINDEX}]) < last(/Template Optical Modules/hwEntityOpticalRxLowThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalRxLowThreshold[{#SNMPINDEX}]) <> -0.01 and
+                   last(/Template Optical Modules/hwEntityOpticalLane3RxPower[{#SNMPINDEX}]) > -40)
+                ) or
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane4RxPower[{#SNMPINDEX}]) < last(/Template Optical Modules/hwEntityOpticalRxLowThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalRxLowThreshold[{#SNMPINDEX}]) <> -0.01 and
+                   last(/Template Optical Modules/hwEntityOpticalLane4RxPower[{#SNMPINDEX}]) > -40)
+                )
+              name: 'Interface {#IFNAME}: Rx Power Muito Baixo (Crítico) em uma das lanes'
+              priority: DISASTER
+              description: |
+                Alerta de potência óptica baixa no host: {HOST.NAME}
+                
+                Interface: {#IFNAME}
+                
+                Rx Power LANE 1: {ITEM.LASTVALUE1} dBm  
+                Rx Power LANE 2: {ITEM.LASTVALUE2} dBm  
+                Rx Power LANE 3: {ITEM.LASTVALUE3} dBm  
+                Rx Power LANE 4: {ITEM.LASTVALUE4} dBm  
+                
+                Limite de aviso: {ITEM.LASTVALUE5} dBm
+                
+                
+                Verifique a qualidade do sinal para evitar perda de conectividade.
+              tags:
+                - tag: 'SINAL RX'
+                  value: '100GB e 40GB'
+            - uuid: 0f050f7ae5264d9fb4786ccb55025a75
+              expression: |
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane1TxPower[{#SNMPINDEX}]) > last(/Template Optical Modules/hwEntityOpticalTxHighThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalTxHighThreshold[{#SNMPINDEX}]) <> -0.01)
+                ) or
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane2TxPower[{#SNMPINDEX}]) > last(/Template Optical Modules/hwEntityOpticalTxHighThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalTxHighThreshold[{#SNMPINDEX}]) <> -0.01)
+                ) or
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane3TxPower[{#SNMPINDEX}]) > last(/Template Optical Modules/hwEntityOpticalTxHighThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalTxHighThreshold[{#SNMPINDEX}]) <> -0.01)
+                ) or
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane4TxPower[{#SNMPINDEX}]) > last(/Template Optical Modules/hwEntityOpticalTxHighThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalTxHighThreshold[{#SNMPINDEX}]) <> -0.01)
+                )
+              name: 'Interface {#IFNAME}: Tx Power Alto em uma das lanes'
+              priority: DISASTER
+              description: |
+                Alerta de potência óptica Alta no host: {HOST.NAME}
+                
+                Interface: {#IFNAME}
+                
+                Rx Power LANE 1: {HOST.NAME}:hwEntityOpticalLane1TxPower[{#SNMPINDEX}].last() dBm
+                Rx Power LANE 2: {HOST.NAME}:hwEntityOpticalLane2TxPower[{#SNMPINDEX}].last() dBm
+                Rx Power LANE 3: {HOST.NAME}:hwEntityOpticalLane3TxPower[{#SNMPINDEX}].last() dBm
+                Rx Power LANE 4: {HOST.NAME}:hwEntityOpticalLane4TxPower[{#SNMPINDEX}].last() dBm
+                
+                Limite de aviso baixo: {HOST.NAME}:hwEntityOpticalTxLowWarnThreshold[{#SNMPINDEX}].last() dBm
+                
+                Verifique a qualidade do sinal para evitar perda de conectividade.
+              tags:
+                - tag: 'SINAL TX'
+                  value: '100GB e 40GB'
+            - uuid: 0451c07e3f0442afbf7b372667bb464e
+              expression: |
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane1TxPower[{#SNMPINDEX}]) > last(/Template Optical Modules/hwEntityOpticalTxHighWarnThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalLane1TxPower[{#SNMPINDEX}]) > last(/Template Optical Modules/hwEntityOpticalTxHighThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalTxHighWarnThreshold[{#SNMPINDEX}]) <> -0.01)
+                ) or
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane2TxPower[{#SNMPINDEX}]) > last(/Template Optical Modules/hwEntityOpticalTxHighWarnThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalLane2TxPower[{#SNMPINDEX}]) > last(/Template Optical Modules/hwEntityOpticalTxHighThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalTxHighWarnThreshold[{#SNMPINDEX}]) <> -0.01)
+                ) or
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane3TxPower[{#SNMPINDEX}]) > last(/Template Optical Modules/hwEntityOpticalTxHighWarnThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalLane3TxPower[{#SNMPINDEX}]) > last(/Template Optical Modules/hwEntityOpticalTxHighThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalTxHighWarnThreshold[{#SNMPINDEX}]) <> -0.01)
+                ) or
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane4TxPower[{#SNMPINDEX}]) > last(/Template Optical Modules/hwEntityOpticalTxHighWarnThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalLane4TxPower[{#SNMPINDEX}]) > last(/Template Optical Modules/hwEntityOpticalTxHighThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalTxHighWarnThreshold[{#SNMPINDEX}]) <> -0.01)
+                )
+              name: 'Interface {#IFNAME}: Tx Power Alto em uma das lanes'
+              priority: WARNING
+              description: |
+                Alerta de potência óptica Alta no host: {HOST.NAME}
+                
+                Interface: {#IFNAME}
+                
+                Tx Power LANE 1: {ITEM.LASTVALUE1} dBm  
+                Tx Power LANE 2: {ITEM.LASTVALUE2} dBm  
+                Tx Power LANE 3: {ITEM.LASTVALUE3} dBm  
+                Tx Power LANE 4: {ITEM.LASTVALUE4} dBm  
+                
+                Limite de aviso: {ITEM.LASTVALUE5} dBm
+                
+                
+                Verifique a qualidade do sinal para evitar perda de conectividade.
+              tags:
+                - tag: 'SINAL TX'
+                  value: '100GB e 40GB'
+            - uuid: fb0fc6d8222a4c77b87917449166292b
+              expression: |
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane1TxPower[{#SNMPINDEX}]) < last(/Template Optical Modules/hwEntityOpticalTxLowWarnThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalLane1TxPower[{#SNMPINDEX}]) < last(/Template Optical Modules/hwEntityOpticalTxLowThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalTxLowWarnThreshold[{#SNMPINDEX}]) <> -0.01 and
+                   last(/Template Optical Modules/hwEntityOpticalLane1TxPower[{#SNMPINDEX}]) > -40)
+                ) or
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane2TxPower[{#SNMPINDEX}]) < last(/Template Optical Modules/hwEntityOpticalTxLowWarnThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalLane2TxPower[{#SNMPINDEX}]) < last(/Template Optical Modules/hwEntityOpticalTxLowThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalTxLowWarnThreshold[{#SNMPINDEX}]) <> -0.01 and
+                   last(/Template Optical Modules/hwEntityOpticalLane2TxPower[{#SNMPINDEX}]) > -40)
+                ) or
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane3TxPower[{#SNMPINDEX}]) < last(/Template Optical Modules/hwEntityOpticalTxLowWarnThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalLane3TxPower[{#SNMPINDEX}]) < last(/Template Optical Modules/hwEntityOpticalTxLowThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalTxLowWarnThreshold[{#SNMPINDEX}]) <> -0.01 and
+                   last(/Template Optical Modules/hwEntityOpticalLane3TxPower[{#SNMPINDEX}]) > -40)
+                ) or
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane4TxPower[{#SNMPINDEX}]) < last(/Template Optical Modules/hwEntityOpticalTxLowWarnThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalLane4TxPower[{#SNMPINDEX}]) < last(/Template Optical Modules/hwEntityOpticalTxLowThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalTxLowWarnThreshold[{#SNMPINDEX}]) <> -0.01 and
+                   last(/Template Optical Modules/hwEntityOpticalLane4TxPower[{#SNMPINDEX}]) > -40)
+                )
+              name: 'Interface {#IFNAME}: Tx Power Baixo em uma das lanes'
+              priority: WARNING
+              description: |
+                Alerta de potência óptica baixa no host: {HOST.NAME}
+                
+                Interface: {#IFNAME}
+                
+                Tx Power LANE 1: {ITEM.LASTVALUE1} dBm  
+                Tx Power LANE 2: {ITEM.LASTVALUE2} dBm  
+                Tx Power LANE 3: {ITEM.LASTVALUE3} dBm  
+                Tx Power LANE 4: {ITEM.LASTVALUE4} dBm  
+                
+                Limite de aviso: {ITEM.LASTVALUE5} dBm
+                
+                
+                Verifique a qualidade do sinal para evitar perda de conectividade.
+              tags:
+                - tag: 'SINAL TX'
+                  value: '100GB e 40GB'
+            - uuid: b003737a596c426b8ed3a9da052e8b34
+              expression: |
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane1TxPower[{#SNMPINDEX}]) < last(/Template Optical Modules/hwEntityOpticalTxLowThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalTxLowThreshold[{#SNMPINDEX}]) <> -0.01 and
+                   last(/Template Optical Modules/hwEntityOpticalLane1TxPower[{#SNMPINDEX}]) > -40)
+                ) or
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane2TxPower[{#SNMPINDEX}]) < last(/Template Optical Modules/hwEntityOpticalTxLowThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalTxLowThreshold[{#SNMPINDEX}]) <> -0.01 and
+                   last(/Template Optical Modules/hwEntityOpticalLane2TxPower[{#SNMPINDEX}]) > -40)
+                ) or
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane3TxPower[{#SNMPINDEX}]) < last(/Template Optical Modules/hwEntityOpticalTxLowThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalTxLowThreshold[{#SNMPINDEX}]) <> -0.01 and
+                   last(/Template Optical Modules/hwEntityOpticalLane3TxPower[{#SNMPINDEX}]) > -40)
+                ) or
+                (
+                  (last(/Template Optical Modules/hwEntityOpticalLane4TxPower[{#SNMPINDEX}]) < last(/Template Optical Modules/hwEntityOpticalTxLowThreshold[{#SNMPINDEX}]) and
+                   last(/Template Optical Modules/hwEntityOpticalTxLowThreshold[{#SNMPINDEX}]) <> -0.01 and
+                   last(/Template Optical Modules/hwEntityOpticalLane4TxPower[{#SNMPINDEX}]) > -40)
+                )
+              name: 'Interface {#IFNAME}: Tx Power Muito Baixo (Crítico) em uma das lanes'
+              priority: DISASTER
+              description: |
+                Alerta de potência óptica baixa no host: {HOST.NAME}
+                
+                Interface: {#IFNAME}
+                
+                Tx Power LANE 1: {ITEM.LASTVALUE1} dBm  
+                Tx Power LANE 2: {ITEM.LASTVALUE2} dBm  
+                Tx Power LANE 3: {ITEM.LASTVALUE3} dBm  
+                Tx Power LANE 4: {ITEM.LASTVALUE4} dBm  
+                
+                Limite de aviso: {ITEM.LASTVALUE5} dBm
+                
+                
+                Verifique a qualidade do sinal para evitar perda de conectividade.
+              tags:
+                - tag: 'SINAL TX'
+                  value: '100GB e 40GB'
+        - uuid: a731b8ed0ed44074bc1f62c243fc63c5
+          name: 'Network Optical Modules Info 10GB'
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#IFNAME},1.3.6.1.2.1.47.1.1.1.1.7,{#IFALIAS},1.3.6.1.2.1.31.1.1.1.18,{#IFPRESENT},.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.14,{#IFCLASS},.1.3.6.1.2.1.47.1.1.1.1.5]'
+          key: net.if.optical.discovery2
+          delay: 1h
+          filter:
+            evaltype: AND
+            conditions:
+              - macro: '{#IFCLASS}'
+                value: '10'
+              - macro: '{#IFNAME}'
+                value: '^(?i)xg'
+          lifetime: 30d
+          enabled_lifetime_type: DISABLE_NEVER
+          description: 'Discovering interfaces from IF-MIB. Interfaces with down(2) Administrative Status are not discovered.'
+          item_prototypes:
+            - uuid: 3a5665a47a0544c1b8db7070f53db59f
+              name: '{#IFNAME}:    Rx Power'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.32.{#SNMPINDEX}'
+              key: 'hwEntityOpticalLaneRxPower2[{#SNMPINDEX}]'
+              delay: 5m
+              value_type: FLOAT
+              units: dBm
+              preprocessing:
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Optical Module Single {#IFNAME}'
+            - uuid: 2e0cf71eca31430bb923f4596de3e017
+              name: '{#IFNAME}:   Tx Power'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.33.{#SNMPINDEX}'
+              key: 'hwEntityOpticalLaneTxPower2[{#SNMPINDEX}]'
+              delay: 5m
+              value_type: FLOAT
+              units: dBm
+              preprocessing:
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Optical Module Single {#IFNAME}'
+            - uuid: f5f49baab9654d29a2157457b9b3912d
+              name: '{#IFNAME}: Rx High Threshold'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.14.{#SNMPINDEX}'
+              key: 'hwEntityOpticalRxHighThreshold2[{#SNMPINDEX}]'
+              delay: 5m
+              value_type: FLOAT
+              units: dBm
+              preprocessing:
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Optical Module Single {#IFNAME}'
+            - uuid: 7b0dc50a47584d7aa8ef69e90caaaa5f
+              name: '{#IFNAME}: Rx High Warning'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.21.{#SNMPINDEX}'
+              key: 'hwEntityOpticalRxHighWarnThreshold2[{#SNMPINDEX}]'
+              delay: 5m
+              value_type: FLOAT
+              units: dBm
+              preprocessing:
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Optical Module Single {#IFNAME}'
+            - uuid: dcb65ab73c71460882a92ac3bde2da0f
+              name: '{#IFNAME}: Rx Low Threshold'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.13.{#SNMPINDEX}'
+              key: 'hwEntityOpticalRxLowThreshold2[{#SNMPINDEX}]'
+              value_type: FLOAT
+              units: dBm
+              preprocessing:
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Optical Module Single {#IFNAME}'
+            - uuid: 8699847a8e364a8ca6041665f68e1d2b
+              name: '{#IFNAME}: Rx Low Warning'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.20.{#SNMPINDEX}'
+              key: 'hwEntityOpticalRxLowWarnThreshold2[{#SNMPINDEX}]'
+              delay: 5m
+              value_type: FLOAT
+              units: dBm
+              preprocessing:
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Optical Module Single {#IFNAME}'
+            - uuid: a58526ffb06a4751bb15590df1059379
+              name: '{#IFNAME}:  Temperatura'
+              type: SNMP_AGENT
+              snmp_oid: '1.3.6.1.4.1.2011.5.25.31.1.1.3.1.5.{#SNMPINDEX}'
+              key: 'hwEntityOpticalTemperature2[{#SNMPINDEX}]'
+              delay: 5m
+              units: dBm
+              tags:
+                - tag: Application
+                  value: 'Optical Module Single {#IFNAME}'
+              trigger_prototypes:
+                - uuid: b587819029714e9793c742c4b6e70be8
+                  expression: |
+                    last(/Template Optical Modules/hwEntityOpticalTemperature2[{#SNMPINDEX}]) > {$OPT_MOD_TEMP_WARN}
+                    and 
+                    last(/Template Optical Modules/hwEntityOpticalTemperature2[{#SNMPINDEX}]) < {$OPT_MOD_TEMP_CRIT}
+                  name: 'Interface {#IFNAME}: Temperatura do Modulo Otico   > 85C'
+                  priority: WARNING
+                  description: 'Temperatura Atual: {ITEM.LASTVALUE1}.'
+                - uuid: b4c56edd253644078d593e81ed4bb2ee
+                  expression: 'last(/Template Optical Modules/hwEntityOpticalTemperature2[{#SNMPINDEX}]) >= {$OPT_MOD_TEMP_CRIT}'
+                  name: 'Interface {#IFNAME}: Temperatura do Modulo Otico    > 90C'
+                  priority: DISASTER
+                  description: 'Temperatura Atual: {ITEM.LASTVALUE1}.'
+            - uuid: 1ce3fd136f514ff98ba3054bb160d6fb
+              name: '{#IFNAME}:   Tx High Threshold'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.16.{#SNMPINDEX}'
+              key: 'hwEntityOpticalTxHighThreshold2[{#SNMPINDEX}]'
+              delay: 5m
+              value_type: FLOAT
+              units: dBm
+              preprocessing:
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Optical Module Single {#IFNAME}'
+            - uuid: 48f1002967eb4accbb6c75e5b0cff2da
+              name: '{#IFNAME}:   Tx High Warning'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.23.{#SNMPINDEX}'
+              key: 'hwEntityOpticalTxHighWarnThreshold2[{#SNMPINDEX}]'
+              delay: 5m
+              value_type: FLOAT
+              units: dBm
+              preprocessing:
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Optical Module Single {#IFNAME}'
+            - uuid: 9eddc20b363743f6abae47e47c17c7e3
+              name: '{#IFNAME}:  Tx Low Threshold'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.15.{#SNMPINDEX}'
+              key: 'hwEntityOpticalTxLowThreshold2[{#SNMPINDEX}]'
+              delay: 5m
+              value_type: FLOAT
+              units: dBm
+              preprocessing:
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Optical Module Single {#IFNAME}'
+            - uuid: fa827455281344d2a759566c4747a3e7
+              name: '{#IFNAME}:   Tx Low Warning'
+              type: SNMP_AGENT
+              snmp_oid: '.1.3.6.1.4.1.2011.5.25.31.1.1.3.1.22.{#SNMPINDEX}'
+              key: 'hwEntityOpticalTxLowWarnThreshold2[{#SNMPINDEX}]'
+              delay: 5m
+              value_type: FLOAT
+              units: dBm
+              preprocessing:
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.01'
+              tags:
+                - tag: Application
+                  value: 'Optical Module Single {#IFNAME}'
+          trigger_prototypes:
+            - uuid: 47c62c22b4b24e2a99b6dc3141b5153b
+              expression: |
+                (last(/Template Optical Modules/hwEntityOpticalLaneRxPower2[{#SNMPINDEX}]) > last(/Template Optical Modules/hwEntityOpticalRxHighWarnThreshold2[{#SNMPINDEX}]))
+                and 
+                (last(/Template Optical Modules/hwEntityOpticalLaneRxPower2[{#SNMPINDEX}]) <= last(/Template Optical Modules/hwEntityOpticalRxHighThreshold2[{#SNMPINDEX}]))
+                and 
+                (last(/Template Optical Modules/hwEntityOpticalRxHighWarnThreshold2[{#SNMPINDEX}]) <> -0.01)
+              name: 'Interface {#IFNAME}: Rx Power Alto'
+              priority: WARNING
+              description: |
+                Alerta de potência óptica Alto no host: {HOST.NAME}
+                
+                Interface: {#IFNAME}
+                
+                Rx Power LANE 1: {ITEM.LASTVALUE1} dBm  
+                Limite de aviso: {ITEM.LASTVALUE2} dBm
+            - uuid: 51745553735544d8851e2be131e2cb63
+              expression: |
+                (last(/Template Optical Modules/hwEntityOpticalLaneRxPower2[{#SNMPINDEX}]) < last(/Template Optical Modules/hwEntityOpticalRxLowWarnThreshold2[{#SNMPINDEX}]))
+                and 
+                (last(/Template Optical Modules/hwEntityOpticalLaneRxPower2[{#SNMPINDEX}]) >= last(/Template Optical Modules/hwEntityOpticalRxLowThreshold2[{#SNMPINDEX}]))
+                and 
+                (last(/Template Optical Modules/hwEntityOpticalRxLowWarnThreshold2[{#SNMPINDEX}]) <> -0.01)
+                and 
+                (last(/Template Optical Modules/hwEntityOpticalLaneRxPower2[{#SNMPINDEX}]) > -40)
+              name: 'Interface {#IFNAME}: Rx Power Baixo'
+              priority: WARNING
+              description: |
+                Alerta de potência óptica Baixo no host: {HOST.NAME}
+                
+                Interface: {#IFNAME}
+                
+                Rx Power LANE 1: {ITEM.LASTVALUE1} dBm  
+                Limite de aviso: {ITEM.LASTVALUE2} dBm
+            - uuid: fc2c1fb53823478ab2bf8fb82512477c
+              expression: |
+                (last(/Template Optical Modules/hwEntityOpticalLaneRxPower2[{#SNMPINDEX}]) > last(/Template Optical Modules/hwEntityOpticalRxHighThreshold2[{#SNMPINDEX}]))
+                and 
+                (last(/Template Optical Modules/hwEntityOpticalRxHighThreshold2[{#SNMPINDEX}]) <> -0.01)
+              name: 'Interface {#IFNAME}: Rx Power Muito Alto'
+              priority: DISASTER
+              description: |
+                Alerta de potência óptica Muito Alto no host: {HOST.NAME}
+                
+                Interface: {#IFNAME}
+                
+                Rx Power LANE 1: {ITEM.LASTVALUE1} dBm  
+                Limite de aviso: {ITEM.LASTVALUE2} dBm
+                
+                
+                Verifique a qualidade do sinal para evitar perda de conectividade.
+            - uuid: a69d172709d049b583c07e639451a32e
+              expression: |
+                (last(/Template Optical Modules/hwEntityOpticalLaneRxPower2[{#SNMPINDEX}]) < last(/Template Optical Modules/hwEntityOpticalRxLowThreshold2[{#SNMPINDEX}]))
+                and 
+                (last(/Template Optical Modules/hwEntityOpticalRxLowThreshold2[{#SNMPINDEX}]) <> -0.01)
+                and 
+                (last(/Template Optical Modules/hwEntityOpticalLaneRxPower2[{#SNMPINDEX}]) > -40)
+              name: 'Interface {#IFNAME}: Rx Power Muito Baixo'
+              priority: DISASTER
+              description: |
+                Alerta de potência óptica Muito Baixo no host: {HOST.NAME}
+                
+                Interface: {#IFNAME}
+                
+                Rx Power LANE 1: {ITEM.LASTVALUE1} dBm  
+                Limite de aviso: {ITEM.LASTVALUE2} dBm
+                
+                
+                Verifique a qualidade do sinal para evitar perda de conectividade.
+            - uuid: 8c28800b1a9747dab02157effd862631
+              expression: |
+                (last(/Template Optical Modules/hwEntityOpticalLaneTxPower2[{#SNMPINDEX}]) > last(/Template Optical Modules/hwEntityOpticalTxHighWarnThreshold2[{#SNMPINDEX}]))
+                and 
+                (last(/Template Optical Modules/hwEntityOpticalLaneTxPower2[{#SNMPINDEX}]) > last(/Template Optical Modules/hwEntityOpticalTxHighThreshold2[{#SNMPINDEX}]))
+                and 
+                (last(/Template Optical Modules/hwEntityOpticalTxHighWarnThreshold2[{#SNMPINDEX}]) <> -0.01)
+              name: 'Interface {#IFNAME}: Tx Power Alto'
+              priority: WARNING
+              description: |
+                Alerta de potência óptica Alto no host: {HOST.NAME}
+                
+                Interface: {#IFNAME}
+                
+                Tx Power LANE 1: {ITEM.LASTVALUE1} dBm  
+                Limite de aviso: {ITEM.LASTVALUE2} dBm
+                
+                
+                Verifique a qualidade do sinal para evitar perda de conectividade.
+            - uuid: 255f12d446314f31bdd675fcc4e22883
+              expression: |
+                (last(/Template Optical Modules/hwEntityOpticalLaneTxPower2[{#SNMPINDEX}]) < last(/Template Optical Modules/hwEntityOpticalTxLowWarnThreshold2[{#SNMPINDEX}]))
+                and 
+                (last(/Template Optical Modules/hwEntityOpticalLaneTxPower2[{#SNMPINDEX}]) < last(/Template Optical Modules/hwEntityOpticalTxLowThreshold2[{#SNMPINDEX}]))
+                and 
+                (last(/Template Optical Modules/hwEntityOpticalTxLowWarnThreshold2[{#SNMPINDEX}]) <> -0.01)
+                and 
+                (last(/Template Optical Modules/hwEntityOpticalLaneTxPower2[{#SNMPINDEX}]) > -40)
+              name: 'Interface {#IFNAME}: Tx Power Baixo'
+              priority: WARNING
+              description: |
+                Alerta de potência óptica Baixo no host: {HOST.NAME}
+                
+                Interface: {#IFNAME}
+                
+                Rx Power LANE 1: {ITEM.LASTVALUE1} dBm  
+                Limite de aviso: {ITEM.LASTVALUE2} dBm
+                
+                
+                Verifique a qualidade do sinal para evitar perda de conectividade.
+            - uuid: 95ec695d387a467aa6c3cf51c15ab773
+              expression: |
+                (last(/Template Optical Modules/hwEntityOpticalLaneTxPower2[{#SNMPINDEX}]) > last(/Template Optical Modules/hwEntityOpticalTxHighThreshold2[{#SNMPINDEX}]))
+                and 
+                (last(/Template Optical Modules/hwEntityOpticalTxHighThreshold2[{#SNMPINDEX}]) <> -0.01)
+              name: 'Interface {#IFNAME}: Tx Power Muito Alto'
+              priority: DISASTER
+              description: |
+                Alerta de potência óptica Muito Alto no host: {HOST.NAME}
+                
+                Interface: {#IFNAME}
+                
+                Rx Power LANE 1: {ITEM.LASTVALUE1} dBm  
+                Limite de aviso: {ITEM.LASTVALUE2} dBm
+                
+                
+                Verifique a qualidade do sinal para evitar perda de conectividade.
+            - uuid: 3a66e1b27e294c2caef8bd98e955dffd
+              expression: |
+                (last(/Template Optical Modules/hwEntityOpticalLaneTxPower2[{#SNMPINDEX}]) < last(/Template Optical Modules/hwEntityOpticalTxLowThreshold2[{#SNMPINDEX}]))
+                and 
+                (last(/Template Optical Modules/hwEntityOpticalTxLowThreshold2[{#SNMPINDEX}]) <> -0.01)
+                and 
+                (last(/Template Optical Modules/hwEntityOpticalLaneTxPower2[{#SNMPINDEX}]) > -40)
+              name: 'Interface {#IFNAME}: Tx Power Muito Baixo'
+              priority: DISASTER
+              description: |
+                Alerta de potência óptica Muito Baixo no host: {HOST.NAME}
+                
+                Interface: {#IFNAME}
+                
+                Rx Power LANE 1: {ITEM.LASTVALUE1} dBm  
+                Limite de aviso: {ITEM.LASTVALUE2} dBm
+                
+                
+                Verifique a qualidade do sinal para evitar perda de conectividade.
+      macros:
+        - macro: '{$OPT_MOD_TEMP_CRIT}'
+          value: '90'
+        - macro: '{$OPT_MOD_TEMP_WARN}'
+          value: '85'
