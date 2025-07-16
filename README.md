@@ -1,3 +1,3 @@
 # Templates_SW_Hauwei
  
-# Fiz a criação desse templante de sinal optico após apagar um templante já feito utilizei um basico de sinal e alterei para pegar o sinal para as interfaces de 100GE e 40GE e fiz a criação de Strings de Atenuação ainda vou melhorar o templante porém já funciona bem
+# Criei este template de sinal óptico após excluir acidentalmente um template anterior. Para refazê-lo, utilizei como base um template simples de sinal e o adaptei para coletar dados das interfaces 100GE, 40GE, 10XGE. Além disso, incluí strings de atenuação para facilitar a análise. Ainda pretendo realizar melhorias, mas o template já está funcionando muito bem
