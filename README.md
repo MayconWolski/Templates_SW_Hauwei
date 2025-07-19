@@ -7,3 +7,8 @@
 #RX com atenuação aparece em laranja
 #TX com atenuação aparece em amarelo
 #Também dá pra usar o template em várias interfaces diferentes e ajuda bastante no dia a dia, tanto pra identificar falhas quanto pra agir mais rápido quando algo está errado na rede.
+
+#Exemplo de um dos Alertas
+
+<img width="426" height="45" alt="image" src="https://github.com/user-attachments/assets/7d985856-d7b0-4fb0-83d1-1de7f9bf0b47" />
+
