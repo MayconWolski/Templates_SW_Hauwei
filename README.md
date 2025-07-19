@@ -1,3 +1,9 @@
 # Templates_SW_Hauwei
  
-# Criei este template de sinal óptico após excluir acidentalmente um template anterior. Para refazê-lo, utilizei como base um template simples de sinal e o adaptei para coletar dados das interfaces 100GE, 40GE, 10XGE. Além disso, incluí strings de atenuação para facilitar a análise. Ainda pretendo realizar melhorias, mas o template já está funcionando muito bem
+# Criei esse template para monitorar o sinal óptico das interfaces 10GE, 40GE e 100GE, depois de ter apagado um por engano. Usei como base um modelo antigo de sinal óptico para 10GE e fui melhorando até virar um template mais completo.
+
+#Ele é focado em identificar e ajudar no tratamento de atenuações na rede, funcionando muito bem nos mapas do Zabbix, onde usa cores pra mostrar o status dos sinais:
+#EXEMPLO
+#RX com atenuação aparece em laranja
+#TX com atenuação aparece em amarelo
+#Também dá pra usar o template em várias interfaces diferentes e ajuda bastante no dia a dia, tanto pra identificar falhas quanto pra agir mais rápido quando algo está errado na rede.
